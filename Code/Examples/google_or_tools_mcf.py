@@ -15,19 +15,18 @@ def main():
 
 
     # Example_0
-    # start_nodes = np.array([0, 0, 1, 1, 1, 2, 2, 3, 4])
-    # end_nodes = np.array([1, 2, 2, 3, 4, 3, 4, 4, 2])
-    # capacities = np.array([15, 8, 20, 4, 10, 15, 4, 20, 5])
-    # unit_costs = np.array([4, 4, 2, 2, 6, 1, 3, 2, 3])
+    start_nodes = np.array([0, 0, 1, 1, 1, 2, 2, 3, 4])
+    end_nodes = np.array([1, 2, 2, 3, 4, 3, 4, 4, 2])
+    capacities = np.array([15, 8, 20, 4, 10, 15, 4, 20, 5])
+    unit_costs = np.array([4, 4, 2, 2, 6, 1, 3, 2, 3])
+    supplies = [20, 0, 0, -5, -15]
 
     # Example_1
-    start_nodes = np.array([0, 0, 2, 2])
-    end_nodes = np.array([1, 3, 1, 3])
-    capacities = np.array([5, 2, 3, 2])
-    unit_costs = np.array([0, 4, 2, 8])
-
-    # Define an array of supplies at each node.
-    supplies = [5, -6, 3, -2]
+    # start_nodes = np.array([0, 0, 2, 2])
+    # end_nodes = np.array([1, 3, 1, 3])
+    # capacities = np.array([5, 2, 3, 2])
+    # unit_costs = np.array([0, 4, 2, 8])
+    # supplies = [5, -6, 3, -2]
 
     # Add arcs, capacities and costs in bulk using numpy.
     all_arcs = smcf.add_arcs_with_capacity_and_unit_cost(
