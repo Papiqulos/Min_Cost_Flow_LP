@@ -2,7 +2,7 @@
 
 ## Overview
 
-This repository contains a Python implementation to solve Minimum Cost Flow (MCF) using Integer Linear Programming with `gurobipy` and using cycle cancelling algorithm using `google or-tools`.
+This repository contains a Python implementation to solve Minimum Cost Flow (MCF) using Integer Linear Programming with `gurobipy` and using cycle cancelling based algorithm using `google or-tools`.
 
 ## Requirements
 
