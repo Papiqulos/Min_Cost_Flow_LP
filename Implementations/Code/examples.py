@@ -144,16 +144,16 @@ def example3():
     capacities = {f"p{i+1}": capacities_plants[i] for i in plants}
 
     # Throughput of warehouses
-    throughput_warehouses = [70_000, 50_000, 100_000, 40_000]
+    throughputs_warehouses = [70_000, 50_000, 100_000, 40_000]
 
     # Mapping throughputs to warehouses
-    throughputs = {f"w{j+1}": throughput_warehouses[j] for j in warehouses}
+    throughputs = {f"w{j+1}": throughputs_warehouses[j] for j in warehouses}
 
     # Demand of customers
-    demand_customers = [50_000, 10_000, 40_000, 35_000, 60_000, 20_000]
+    demands_customers = [50_000, 10_000, 40_000, 35_000, 60_000, 20_000]
 
     # Mapping demands to customers
-    demands = {f"c{k+1}": demand_customers[k] for k in customers}
+    demands = {f"c{k+1}": demands_customers[k] for k in customers}
 
     return nodes, edges, costs, capacities, throughputs, demands, plants_n, warehouses_n, customers_n, plants_to_warehouses, plants_to_customers, warehouses_to_customers
 
