@@ -9,7 +9,7 @@ def min_cost_flow_ilp(nodes:list,
                       cost:dict, 
                       capacity:dict, 
                       supply:dict):
-    """Solves the minimum cost flow problem when given the nodes, edges, costs, capacities and supplies using Gurobi's ILP solver.
+    """Solves the minimum cost flow problem when given the nodes, edges, costs, capacities and supplies using Gurobi's ILP solver (for simple networks).
     
     Args:
         nodes (list): List of nodes in the network.

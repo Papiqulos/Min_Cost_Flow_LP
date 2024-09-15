@@ -1,7 +1,7 @@
 def example1():
     # Example_1
     '''
-    MIN Z = x1 + 4x2 + 2x3 + 8x4
+    MIN Z = 0x1 + 4x2 + 2x3 + 8x4
     subject to
     x1 + x2 = 5
     -x1 + -x3 = -6
@@ -139,19 +139,16 @@ def example3():
 
     # Capacities of plants
     capacities_plants = [150_000, 200_000]
-
     # Mapping capacities to plants
     capacities = {f"p{i+1}": capacities_plants[i] for i in plants}
 
     # Throughput of warehouses
     throughputs_warehouses = [70_000, 50_000, 100_000, 40_000]
-
     # Mapping throughputs to warehouses
     throughputs = {f"w{j+1}": throughputs_warehouses[j] for j in warehouses}
 
     # Demand of customers
     demands_customers = [50_000, 10_000, 40_000, 35_000, 60_000, 20_000]
-
     # Mapping demands to customers
     demands = {f"c{k+1}": demands_customers[k] for k in customers}
 
