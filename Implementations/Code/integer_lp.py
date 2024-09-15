@@ -85,12 +85,12 @@ def min_cost_flow_ilp_factory(nodes:list,
     """Solves the minimum cost flow problem for the Crown Distributors Company example using Gurobi's ILP solver.
     
     Args:
-        nodes (list): List of nodes in the network.
-        edges (list): List of edges in the network.
+        nodes (list): List of nodes in the network. (plants, warehouses, customers)
+        edges (list): List of edges in the network. (plants to warehouses, plants to customers, warehouses to customers)
         costs (dict): Dictionary of costs for each edge.
-        capacities (dict): Dictionary of capacities for each edge.
-        throughputs (dict): Dictionary of throughputs for each edge.
-        demands (dict): Dictionary of demands for each node.
+        capacities (dict): Dictionary of capacities for each plant.
+        throughputs (dict): Dictionary of throughputs for each warehouse.
+        demands (dict): Dictionary of demands for each customer.
         plants_n (list): List of plants.
         warehouses_n (list): List of warehouses.
         customers_n (list): List of customers.
