@@ -87,21 +87,14 @@ def example3():
     customers_n = [f"c{k+1}" for k in customers]
     
     # Nodes
-    nodes3 = plants_n + warehouses_n + customers_n
+    nodes = plants_n + warehouses_n + customers_n
 
     # Edges (Decision variables)
-    plants_to_warehouses = [(f"p{i+1}", f"w{j+1}") for i in plants for j in warehouses]
-    x = [(f"p{i+1}", f"w{j+1}") for i in plants for j in warehouses]
-
-    plants_to_customers = [(f"p{i+1}", f"c{k+1}") for i in plants for k in customers]
-    y = [(f"p{i+1}", f"c{k+1}") for i in plants for k in customers]
-
-    warehouses_to_customers = [(f"w{j+1}", f"c{k+1}") for j in warehouses for k in customers]
-    z = [(f"w{j+1}", f"c{k+1}") for j in warehouses for k in customers]
+    plants_to_warehouses = [(f"p{i+1}", f"w{j+1}") for i in plants for j in warehouses]         # x_ij
+    plants_to_customers = [(f"p{i+1}", f"c{k+1}") for i in plants for k in customers]           # y_ik
+    warehouses_to_customers = [(f"w{j+1}", f"c{k+1}") for j in warehouses for k in customers]   # z_jk
+    edges = plants_to_warehouses + plants_to_customers + warehouses_to_customers
     
-    edges3 = plants_to_warehouses + plants_to_customers + warehouses_to_customers
-    
-
     # Plant to warehouse costs
     costs_pw = [
     [0.5, None],  # W1 (Costs for P1, P2)
@@ -131,45 +124,38 @@ def example3():
     ]               
 
     # Mapping costs to edges
-    cost3_1 = {(f"p{i+1}", f"w{j+1}"): costs_pw[j][i] for i in plants for j in warehouses}
-    cost3_2 = {(f"p{i+1}", f"c{k+1}"): costs_pc[k][i] for i in plants for k in customers}
-    cost3_3 = {(f"w{j+1}", f"c{k+1}"): costs_wc[k][j] for j in warehouses for k in customers}
+    cost3_1 = {(f"p{i+1}", f"w{j+1}"): costs_pw[j][i] for i in plants for j in warehouses}     # c_ij
+    cost3_2 = {(f"p{i+1}", f"c{k+1}"): costs_pc[k][i] for i in plants for k in customers}      # d_ik
+    cost3_3 = {(f"w{j+1}", f"c{k+1}"): costs_wc[k][j] for j in warehouses for k in customers}  # e_jk
 
     # Merging costs
-    cost3 = {**cost3_1, **cost3_2, **cost3_3}
+    costs = {**cost3_1, **cost3_2, **cost3_3}
 
     # Remove the edges with None costs
-    edges3 = [edge for edge in edges3 if cost3[edge] is not None]
-    x = [edge for edge in x if cost3[edge] is not None]
-    y = [edge for edge in y if cost3[edge] is not None]
-    z = [edge for edge in z if cost3[edge] is not None]
-    # print(edges3)
+    plants_to_warehouses = [edge for edge in plants_to_warehouses if costs[edge] is not None]
+    plants_to_customers = [edge for edge in plants_to_customers if costs[edge] is not None]
+    warehouses_to_customers = [edge for edge in warehouses_to_customers if costs[edge] is not None]
+    edges = [edge for edge in edges if costs[edge] is not None]
 
     # Capacities of plants
     capacities_plants = [150_000, 200_000]
-    capacity = {f"p{i+1}": capacities_plants[i] for i in plants}
+
+    # Mapping capacities to plants
+    capacities = {f"p{i+1}": capacities_plants[i] for i in plants}
 
     # Throughput of warehouses
     throughput_warehouses = [70_000, 50_000, 100_000, 40_000]
-    capacity1 = {f"w{j+1}": throughput_warehouses[j] for j in warehouses}
+
+    # Mapping throughputs to warehouses
+    throughputs = {f"w{j+1}": throughput_warehouses[j] for j in warehouses}
 
     # Demand of customers
     demand_customers = [50_000, 10_000, 40_000, 35_000, 60_000, 20_000]
-    demand = {f"c{k+1}": demand_customers[k] for k in customers}
-    
-    
-    # capacity3_1 = {(f"p{i+1}", f"w{j+1}"): min(capacities_plants[i], throughput_warehouses[j]) for i in plants for j in warehouses}
-    # capacity3_2 = {(f"p{i+1}", f"c{k+1}"): min(capacities_plants[i], demand_customers[k]) for i in plants for k in customers}
-    # capacity3_3 = {(f"w{j+1}", f"c{k+1}"): min(throughput_warehouses[j], demand_customers[k]) for j in warehouses for k in customers}
 
-    # capacity3 = {**capacity3_1, **capacity3_2, **capacity3_3}
-    
-    
-    # supply3 = capacities_plants + [0] * len(warehouses) + [-demand for demand in demand_customers]
+    # Mapping demands to customers
+    demands = {f"c{k+1}": demand_customers[k] for k in customers}
 
-    # supply3 = {node: supply3[i] for i, node in enumerate(nodes3)}
-
-    return nodes3, edges3, cost3, capacity, capacity1, demand, plants_n, warehouses_n, customers_n, x, y, z
+    return nodes, edges, costs, capacities, throughputs, demands, plants_n, warehouses_n, customers_n, plants_to_warehouses, plants_to_customers, warehouses_to_customers
 
 
 
