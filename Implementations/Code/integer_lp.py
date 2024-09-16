@@ -6,17 +6,17 @@ from examples import example1, example2, example3
 
 def min_cost_flow_ilp(nodes:list, 
                       edges:list, 
-                      cost:dict, 
-                      capacity:dict, 
-                      supply:dict):
+                      costs:dict, 
+                      capacities:dict, 
+                      supplies:dict):
     """Solves the minimum cost flow problem when given the nodes, edges, costs, capacities and supplies using Gurobi's ILP solver (for simple networks).
     
     Args:
         nodes (list): List of nodes in the network.
         edges (list): List of edges in the network.
-        cost (dict): Dictionary of costs for each edge.
-        capacity (dict): Dictionary of capacities for each edge.
-        supply (dict): Dictionary of supplies for each node.
+        costs (dict): Dictionary of costs for each edge.
+        capacities (dict): Dictionary of capacities for each edge.
+        supplies (dict): Dictionary of supplies for each node.
         
     Returns:
         None"""
@@ -37,18 +37,18 @@ def min_cost_flow_ilp(nodes:list,
     for i in nodes:
         model.addConstr(gp.quicksum(f[i,j] for (x,j) in edges if x == i) -
                         gp.quicksum(f[j,i] for (j,x) in edges if x == i)
-                    == supply[i])
+                    == supplies[i])
 
     # Capacity constraints
     for (i,j) in edges:
-        model.addConstr(f[i,j] <= capacity[i,j])
+        model.addConstr(f[i,j] <= capacities[i,j])
 
     # All flows are non-negative
     for (i,j) in edges:
         model.addConstr(f[i,j] >= 0)
         
     ## Objective Function
-    model.setObjective(gp.quicksum(cost[i,j] * f[i,j] for (i,j) in edges), GRB.MINIMIZE)
+    model.setObjective(gp.quicksum(costs[i,j] * f[i,j] for (i,j) in edges), GRB.MINIMIZE)
 
     ## Solve
     model.optimize()
@@ -168,3 +168,6 @@ if __name__ == '__main__':
 
     print("\n-----------------------------Example_3-----------------------------")
     min_cost_flow_ilp_factory(*example3())
+
+    print("\n-----------------------------Example_3-----------------------------")
+    min_cost_flow_ilp(*example3(graph=True))

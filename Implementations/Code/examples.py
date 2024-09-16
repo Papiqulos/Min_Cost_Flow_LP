@@ -1,3 +1,5 @@
+
+
 def example1():
     # Example_1
     '''
@@ -75,7 +77,14 @@ def example2():
 
     return nodes2, edges2, cost2, capacity2, supply2
 
-def example3():
+def example3(graph:bool=False) -> tuple:
+    """Crown distributors company example
+    Args:
+        graph (bool, optional): If True, the function returns the graph. Defaults to False.
+    
+    Returns:
+        tuple: A tuple containing the graph's nodes, edges, costs, capacities, throughputs, demands, plants_n, warehouses_n, customers_n, plants_to_warehouses, plants_to_customers, warehouses_to_customers
+    """
     # Example 3 (Crown distributors company)
     plants = range(2)
     plants_n = [f"p{i+1}" for i in plants]
@@ -152,7 +161,40 @@ def example3():
     # Mapping demands to customers
     demands = {f"c{k+1}": demands_customers[k] for k in customers}
 
-    return nodes, edges, costs, capacities, throughputs, demands, plants_n, warehouses_n, customers_n, plants_to_warehouses, plants_to_customers, warehouses_to_customers
+
+
+
+
+
+    if graph:
+        # capacities_plants = [150_000, 200_000]
+        capacity3_1 = {(f"p{i+1}", f"w{j+1}"): min(capacities_plants[i], throughputs_warehouses[j]) for i in plants for j in warehouses}
+        capacity3_2 = {(f"p{i+1}", f"c{k+1}"): min(capacities_plants[i], demands_customers[k]) for i in plants for k in customers}
+        capacity3_3 = {(f"w{j+1}", f"c{k+1}"): min(throughputs_warehouses[j], demands_customers[k]) for j in warehouses for k in customers}
+
+        capacities = {**capacity3_1, **capacity3_2, **capacity3_3}
+
+        supplies = capacities_plants + [0] * len(warehouses) + [-demand for demand in demands_customers]
+    
+        supplies = {node: supplies[i] for i, node in enumerate(nodes)}
+        excess = sum(supplies.values())
+
+        # Add a dummy node to balance the supply and demand
+        nodes.append('dummy')
+        supplies['dummy'] = -excess
+        edges.append(('p1', 'dummy'))
+        edges.append(('p2', 'dummy'))
+        costs['p1', 'dummy'], costs['p2', 'dummy'] = 0, 0
+        
+        # Distribute the excess supply to the dummy node from the plants
+        # This distribution is arbitrary and can be changed and yields different results for different distributions
+        # This distribution is based on the capacities of the plants (Higher capacity plant, higher distribution from the plant to the dummy node)
+        # This distribution yields the same result as non-graph implementation
+        capacities['p1', 'dummy'], capacities['p2', 'dummy'] = 80_000, 55_000
+        
+        return nodes, edges, costs, capacities, supplies
+    else:
+        return nodes, edges, costs, capacities, throughputs, demands, plants_n, warehouses_n, customers_n, plants_to_warehouses, plants_to_customers, warehouses_to_customers
 
 
 
