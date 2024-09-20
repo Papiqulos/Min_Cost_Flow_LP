@@ -86,12 +86,15 @@ def example3(graph:bool=False) -> tuple:
         tuple: A tuple containing the graph's nodes, edges, costs, capacities, throughputs, demands, plants_n, warehouses_n, customers_n, plants_to_warehouses, plants_to_customers, warehouses_to_customers
     """
     # Example 3 (Crown distributors company)
+    ##
     plants = range(2)
     plants_n = [f"p{i+1}" for i in plants]
 
+    ##
     warehouses = range(4)
     warehouses_n = [f"w{j+1}" for j in warehouses]
 
+    ##
     customers = range(6)
     customers_n = [f"c{k+1}" for k in customers]
     
@@ -104,7 +107,7 @@ def example3(graph:bool=False) -> tuple:
     warehouses_to_customers = [(f"w{j+1}", f"c{k+1}") for j in warehouses for k in customers]   # z_jk
     edges = plants_to_warehouses + plants_to_customers + warehouses_to_customers
     
-    # Plant to warehouse costs
+    ## Plant to warehouse costs
     costs_pw = [
     [0.5, None],  # W1 (Costs for P1, P2)
     [0.5, 0.3],   # W2
@@ -112,7 +115,7 @@ def example3(graph:bool=False) -> tuple:
     [0.2, 0.2],   # W4
     ]
 
-    # Plant to customer costs
+    ## Plant to customer costs
     costs_pc = [
         [1.0, 2.0],   # C1 (Costs for P1, P2)
         [None, None], # C2
@@ -122,7 +125,7 @@ def example3(graph:bool=False) -> tuple:
         [1.0, None]   # C6
     ]
 
-    # Warehouse to customer costs
+    ## Warehouse to customer costs
     costs_wc = [
     [None, 1.0, None, None],    # C1 (Costs for W1, W2, W3, W4)
     [1.5, 0.5, 1.5, None],      # C2
@@ -146,17 +149,17 @@ def example3(graph:bool=False) -> tuple:
     warehouses_to_customers = [edge for edge in warehouses_to_customers if costs[edge] is not None]
     edges = [edge for edge in edges if costs[edge] is not None]
 
-    # Capacities of plants
+    ## Capacities of plants
     capacities_plants = [150_000, 200_000]
     # Mapping capacities to plants
     capacities = {f"p{i+1}": capacities_plants[i] for i in plants}
 
-    # Throughput of warehouses
+    ## Throughput of warehouses
     throughputs_warehouses = [70_000, 50_000, 100_000, 40_000]
     # Mapping throughputs to warehouses
     throughputs = {f"w{j+1}": throughputs_warehouses[j] for j in warehouses}
 
-    # Demand of customers
+    ## Demand of customers
     demands_customers = [50_000, 10_000, 40_000, 35_000, 60_000, 20_000]
     # Mapping demands to customers
     demands = {f"c{k+1}": demands_customers[k] for k in customers}

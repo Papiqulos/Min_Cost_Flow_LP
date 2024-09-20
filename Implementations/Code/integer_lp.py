@@ -55,8 +55,8 @@ def min_cost_flow_ilp(nodes:list,
 
     end_time = time.time()
 
-    diff = time.gmtime(end_time - start_time)
-    print('\n[Total time used: {} minutes, {} seconds]'.format(diff.tm_min, diff.tm_sec))
+    diff = (end_time - start_time) * 1_000
+    print(f'\n[Total time used: {diff:.3f} ms]')
 
     ## Output results
     try:
@@ -138,8 +138,8 @@ def min_cost_flow_ilp_factory(nodes:list,
 
     end_time = time.time()
 
-    diff = time.gmtime(end_time - start_time)
-    print('\n[Total time used: {} minutes, {} seconds]'.format(diff.tm_min, diff.tm_sec))
+    diff = (end_time - start_time) * 1_000
+    print(f'\n[Total time used: {diff:.3f} ms]')
 
     ## Output results
     try:
