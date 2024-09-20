@@ -169,5 +169,6 @@ if __name__ == '__main__':
     print("\n-----------------------------Example_3-----------------------------")
     min_cost_flow_ilp_factory(*example3())
 
-    print("\n-----------------------------Example_3-----------------------------")
+    # Modeled as a balanced graph
+    print("\n-----------------------------Modeled as a balanced graph-----------------------------")
     min_cost_flow_ilp(*example3(graph=True))
