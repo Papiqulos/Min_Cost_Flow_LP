@@ -24,7 +24,7 @@ def min_cost_flow_ilp(nodes:list,
 
     ## Suppress output
     env = gp.Env(empty=True)
-    env.setParam("OutputFlag",0)
+    env.setParam("OutputFlag", 0)
     env.start()
 
     model = gp.Model(env=env)

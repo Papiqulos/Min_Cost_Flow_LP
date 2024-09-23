@@ -193,22 +193,31 @@ def example3(graph:bool = False,
             # Give the dummy node the excess supply as demand
             supplies['dummy'] = -excess
 
-            # Connect the dummy node to the first two plants
-            edges.append(('p1', 'dummy'))
-            edges.append(('p2', 'dummy'))
+            if num_plants == 1:
+                # Connect the dummy node to the plant
+                edges.append(('p1', 'dummy'))
 
-            # Set the costs of the edges from the plants to the dummy node to 0
-            costs['p1', 'dummy'], costs['p2', 'dummy'] = 0, 0
-            
-            # Distribute the excess supply to the dummy node from the plants
-            # This distribution is arbitrary and can be changed and yields different results for different distributions
-            # This distribution is based on the capacities of the plants (Higher capacity plant, higher distribution from the plant to the dummy node)
-            if crown:
-                # This distribution yields the same result as non-graph implementation for the Crown distributors company
-                capacities['p1', 'dummy'], capacities['p2', 'dummy'] = 80_000, 55_000
+                # Set the cost of the edge from the plant to the dummy node to 0
+                costs['p1', 'dummy'] = 0
+
+                capacities['p1', 'dummy'] = excess
             else:
-                # Arbitrary distribution for any other example
-                capacities['p1', 'dummy'], capacities['p2', 'dummy'] = excess // 2, excess - (excess // 2)
+                # Connect the dummy node to the first two plants
+                edges.append(('p1', 'dummy'))
+                edges.append(('p2', 'dummy'))
+
+                # Set the costs of the edges from the plants to the dummy node to 0
+                costs['p1', 'dummy'], costs['p2', 'dummy'] = 0, 0
+            
+                # Distribute the excess supply to the dummy node from the plants
+                # This distribution is arbitrary and can be changed and yields different results for different distributions
+                # This distribution is based on the capacities of the plants (Higher capacity plant, higher distribution from the plant to the dummy node)
+                if crown:
+                    # This distribution yields the same result as non-graph implementation for the Crown distributors company
+                    capacities['p1', 'dummy'], capacities['p2', 'dummy'] = 80_000, 55_000
+                else:
+                    # Arbitrary distribution for any other example
+                    capacities['p1', 'dummy'], capacities['p2', 'dummy'] = excess // 2, excess - (excess // 2)
         
         return nodes, edges, costs, capacities, supplies
     else:
